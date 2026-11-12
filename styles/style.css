@@ -8,16 +8,6 @@ html {
   block-size: 100%;
 }
 
-.page {
-  inline-size: 1200px;
-  block-size: 100%;
-  margin: auto;
-  color: #fff;
-  font-family: 'Fira Sans Condensed', sans-serif;
-  font-size: 18px;
-  background-color: #1b1919;
-}
-
 h1,
 h2,
 h3,
@@ -47,5 +37,341 @@ ol {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #D9D9D9;
+  background-color: #d9d9d9;
+}
+
+.page {
+  display: flex;
+  justify-content: center; /*по горизонтали */
+  align-items: center; /* по вертикали */
+  min-height: 100vh;
+  inline-size: 1200px;
+  max-width: 100%; /* на узком экране не даёт горизонтального скролла */
+  block-size: 100%;
+  margin: auto;
+  color: #fff;
+  font-family: 'Fira Sans Condensed', sans-serif;
+  font-size: 18px;
+  background-color: #1b1919;
+}
+
+/* ========== КОНТЕНТ: колонки ========== */
+
+.content {
+  display: flex;
+  align-items: flex-end; /* колонки прижаты к низу */
+  gap: 30px; /* отступ между .result и .content__details */
+  width: 1140px; /*желаемая ширина*/
+  max-width: 100%; /* не шире родителя */
+}
+
+/* ========== ЛЕВАЯ КОЛОНКА: видео + форма ========== */
+
+.result {
+  display: flex;
+  flex-direction: column; /* видео над формой */
+  flex-shrink: 0; /* колонку не сжимать */
+  width: 711px;
+}
+
+.result__video-container {
+  width: 711px;
+  height: 386px;
+  margin: 78px 0 16px;
+  position: relative; /*внутри прелоадер */
+}
+
+.result__video {
+  width: 100%;
+  height: 100%; /* видео на весь контейнер */
+  object-fit: cover; /* масштабируется без искажений, лишнее обрезается */
+}
+
+/* ========== ПРАВАЯ КОЛОНКА: заголовок + список ========== */
+
+.content__details {
+  display: flex;
+  flex-direction: column; /* заголовок над списком */
+  flex: 1 1 0; /* занимает остаток ширины: 1140 - 711 - 30 = 399px */
+  min-width: 0; /* разрешает сжиматься меньше содержимого (чтобы работало «…») */
+  height: 534px;
+  gap: 26px;
+}
+
+.title {
+  font-size: 75px;
+  font-weight: 700;
+  line-height: 0.94;
+  text-transform: uppercase;
+  font-family: Oswald, sans-serif;
+}
+
+.content__accent {
+  color: #545050; /* «По-» другим цветом */
+}
+
+/* ---------- Список карточек ---------- */
+
+.content__list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px; /* отступ между списком и кнопкой «Показать ещё» */
+  overflow-y: auto; /* скролл при переполнении (скроллбар уже стилизован) */
+  height: 534px;
+  position: relative; /*внутри прелоадер */
+}
+
+.content__list {
+  display: flex;
+  flex-direction: column;
+  gap: 30px; /* отступ между карточками */
+  margin: 0; /* сброс браузерных стилей списка */
+  padding: 0;
+  list-style: none;
+}
+
+/* ---------- Карточка ---------- */
+
+.content__card-link {
+  display: block; /* ссылка на всю ширину карточки */
+  color: inherit; /* цвет не синий, а как у текста */
+  text-decoration: none; /* без подчёркивания */
+  cursor: pointer; /*значок в виде руки*/
+}
+
+.content__video-card {
+  display: flex; /* текст и картинка в одну строку */
+  align-items: flex-start; /* прижаты к верху */
+}
+
+.content__video-card-description-container {
+  flex-grow: 1; /* текст занимает всё, что не занято картинкой */
+  min-width: 0; /* без этого «…» не сработает */
+}
+
+.content__video-card-title {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 100%;
+  text-transform: uppercase;
+  white-space: nowrap; /* три свойства вместе дают «…» в одну строку */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: Oswald, sans-serif;
+  padding-bottom: 6px;
+}
+
+.content__video-card-description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4; /*4 строки из макета */
+  line-height: 90%;
+  overflow: hidden;
+  font-size: 18px;
+  font-weight: 400;
+  padding-bottom: 6px; /* место для подчёркивания внутри блока */
+  margin-bottom: -6px; /* компенсация */
+}
+
+.content__video-card-thumbnail {
+  flex-shrink: 0; /* картинку не сжимать */
+  min-width: 194px;
+  height: 100px;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ---------- Форма поиска ---------- */
+
+.search-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* поля прижаты к верху */
+  gap: 40px;
+  flex: 1;
+}
+
+.search-form__fieldset {
+  flex: 1; /* поля делят свободное место поровну */
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.search-form__fieldset-title {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1;
+  padding-bottom: 5px;
+}
+
+/* ---------- ФОРМЫ ---------- */
+
+.visually-hidden {
+  /*скрываем лишние лейблы*/
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.search-form__checkbox-list {
+  display: flex;
+  gap: 15px;
+}
+
+.search-form__label {
+  display: flex;
+  align-items: center;
+  width: fit-content; /* ширина по содержимому */
+  gap: 5px; /* отступ между чекбоксом [] и подписью */
+  cursor: pointer; /*значок в виде руки*/
+}
+
+.search-form__textfield {
+  appearance: none; /*убирает браузерное оформление */
+  box-sizing: border-box;
+  width: 227px; /* длина линий и текстa */
+  max-width: 100%;
+  padding: 2.5px 14px 2.5px 0;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 400;
+  color: #fff;
+  background-color: transparent;
+  border: none;
+  border-top: 1px solid #fff; /* Верхняя рамка */
+  border-bottom: 1px solid #fff;
+  border-radius: 0;
+}
+
+.search-form__textfield::placeholder {
+  color: rgb(255 255 255 / 0.7);
+}
+
+.search-form__textfield:focus,
+.search-form__textfield:focus-visible {
+  outline: none; /* убираем обводку у самого поля */
+}
+
+.search-form__label:has(:focus-visible) {
+  outline: 1px solid #fff; /* рамка */
+  outline-offset: 1px; /* зазор между рамкой кнопки и обводкой */
+}
+
+.search-form__pseudo-checkbox {
+  box-sizing: border-box;
+  border: 1px solid #fff;
+  width: 19px;
+  height: 19px;
+  padding: 1px; /* зазор между рамкой и закрашенной частью */
+}
+
+.search-form__pseudo-checkbox::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  opacity: 0;
+}
+
+.search-form__checkbox:checked + .search-form__pseudo-checkbox::after {
+  opacity: 1;
+}
+
+.search-form__label:hover .search-form__label-text {
+  text-decoration: underline; /*Подчёркивание текста при наведении на любую точку label */
+}
+
+/* ---------- КНОПКИ ---------- */
+
+.button {
+  box-sizing: border-box;
+  background-color: transparent;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 18px;
+  text-align: center;
+  color: #fff;
+  border: 1px solid #fff;
+  cursor: pointer; /*значок в виде руки*/
+}
+
+.button:active {
+  background-color: #545050;
+}
+
+.button:hover {
+  text-decoration: underline;
+}
+
+.button:focus {
+  outline: none; /* сбрасываем стандартную обводку */
+}
+
+.button:focus-visible {
+  outline: 1px solid #fff;
+  outline-offset: 1px; /* зазор между рамкой кнопки и обводкой */
+}
+
+.search-form__submit-button {
+  /*найти*/
+  width: 194px;
+  height: 34px;
+  align-self: flex-end;
+}
+
+.more-button {
+  /*показать ещё*/
+  width: 100%;
+  height: 34px;
+}
+
+/* ---------- КАРТОЧКИ ---------- */
+
+.content__card-link_current {
+  background-color: #545050;
+}
+
+.content__card-link:active {
+  background-color: #545050;
+}
+
+.content__card-link:hover .content__video-card-title {
+  text-decoration: underline;
+  text-underline-offset: 6px; /*смещает подчёркивание у title*/
+  text-decoration-thickness: 2px; /*ширина подчёркивания*/
+}
+
+.content__card-link:hover .content__video-card-description {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+
+.content__card-link:focus {
+  outline: none; /* сбрасываем стандартную обводку */
+}
+
+.content__card-link:focus-visible {
+  outline: 1px solid #fff;
+}
+
+.content__list-item {
+  padding: 0 3px;
+}
+
+/* ---------- Позиционирование прелоадеров ---------- */
+
+.preloader {
+  position: absolute; /*позиционируется относительно ближайшего родителя с position: relative*/
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3; /* порядОК наложения элементов*/
 }
