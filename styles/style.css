@@ -59,7 +59,8 @@ ol {
 
 .content {
   display: flex;
-  align-items: flex-end; /* колонки прижаты к низу */
+  align-items: stretch; /*занимают всё доступное пространство (размер под макет)*/
+  /*align-items: flex-end; /* колонки прижаты к низу */
   gap: 30px; /* отступ между .result и .content__details */
   width: 1140px; /*желаемая ширина*/
   max-width: 100%; /* не шире родителя */
@@ -84,7 +85,8 @@ ol {
 .result__video {
   width: 100%;
   height: 100%; /* видео на весь контейнер */
-  object-fit: cover; /* масштабируется без искажений, лишнее обрезается */
+  object-fit: cover; /*обрезает всё, что не помещается в контейнер*/
+  object-position: center; /*выравнивает видео по центру*/
 }
 
 /* ========== ПРАВАЯ КОЛОНКА: заголовок + список ========== */
@@ -94,8 +96,7 @@ ol {
   flex-direction: column; /* заголовок над списком */
   flex: 1 1 0; /* занимает остаток ширины: 1140 - 711 - 30 = 399px */
   min-width: 0; /* разрешает сжиматься меньше содержимого (чтобы работало «…») */
-  height: 534px;
-  gap: 26px;
+  gap: 26px;  
 }
 
 .title {
@@ -117,8 +118,11 @@ ol {
   flex-direction: column;
   gap: 30px; /* отступ между списком и кнопкой «Показать ещё» */
   overflow-y: auto; /* скролл при переполнении (скроллбар уже стилизован) */
-  height: 534px;
   position: relative; /*внутри прелоадер */
+  /*размер под макет*/
+  flex: 1 1 0; /* забирает остаток под заголовком */
+  min-height: 0; /*скролл*/
+  top: -2px; /*подняли скцию под макет*/
 }
 
 .content__list {
@@ -169,8 +173,7 @@ ol {
   overflow: hidden;
   font-size: 18px;
   font-weight: 400;
-  padding-bottom: 6px; /* место для подчёркивания внутри блока */
-  margin-bottom: -6px; /* компенсация */
+  
 }
 
 .content__video-card-thumbnail {
@@ -329,6 +332,7 @@ ol {
   /*показать ещё*/
   width: 100%;
   height: 34px;
+  padding: 6px 142px;
 }
 
 /* ---------- КАРТОЧКИ ---------- */
